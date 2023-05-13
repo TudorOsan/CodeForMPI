@@ -1,0 +1,211 @@
+Radix : 
+import time
+
+def radix_sort(nums):
+    max_digits = len(str(max(nums)))
+    for digit in range(max_digits):
+        buckets = [[] for _ in range(10)]
+        for num in nums:
+            bucket_idx = (num // 10**digit) % 10
+            buckets[bucket_idx].append(num)
+        nums = [num for bucket in buckets for num in bucket]
+    return nums
+def main():
+    with open('output.txt', 'r') as f:
+        nums = [int(line.strip()) for line in f]
+    sorted_nums = radix_sort(nums)
+    with open('output_sorted.txt', 'w') as f:
+        for num in sorted_nums:
+            f.write(str(num) + '\n')
+    print('Done! Output written to output_sorted.txt')
+if __name__ == '__main__':
+    start_time = time.time()
+    main()
+    end_time = time.time()
+    print('--- %s seconds ---' % (end_time - start_time))
+
+
+Bucket:
+
+
+import time
+
+def bucket_sort(nums):
+   num_buckets = len(nums)
+   buckets = [[] for _ in range(num_buckets)]
+   for num in nums:
+       bucket_idx = num // num_buckets
+       buckets[bucket_idx].append(num)
+   for bucket in buckets:
+       bucket.sort()
+   sorted_nums = [num for bucket in buckets for num in bucket]
+   return sorted_nums
+def main():
+   with open('output.txt', 'r') as f:
+       nums = [int(line.strip()) for line in f]
+   sorted_nums = bucket_sort(nums)
+   with open('output_sorted.txt', 'w') as f:
+       for num in sorted_nums:
+           f.write(str(num) + '\n')
+   print('Done! Output written to output_sorted.txt')
+if __name__ == '__main__':
+   start_time = time.time()
+   main()
+   end_time = time.time()
+   print('--- %s seconds ---' % (end_time - start_time))
+   
+   
+Bubble : 
+import time
+
+def bubble_sort(nums):
+   n = len(nums)
+   for i in range(n):
+       for j in range(0, n-i-1):
+           if nums[j] > nums[j+1] :
+               nums[j], nums[j+1] = nums[j+1], nums[j]
+   return nums
+
+
+def main():
+   with open('output.txt', 'r') as f:
+       nums = [int(line.strip()) for line in f]
+   sorted_nums = bubble_sort(nums)
+   with open('output_sorted.txt', 'w') as f:
+       for num in sorted_nums:
+           f.write(str(num) + '\n')
+   print('Done! Output written to output_sorted.txt')
+
+
+if __name__ == '__main__':
+   start_time = time.time()
+   main()
+   end_time = time.time()
+   print('--- %s seconds ---' % (end_time - start_time))
+
+Merge:
+import time
+
+def merge_sort(nums):
+   if len(nums) <= 1:
+       return nums
+   mid = len(nums) // 2
+   left_half = nums[:mid]
+   right_half = nums[mid:]
+   left_half = merge_sort(left_half)
+   right_half = merge_sort(right_half)
+
+   return merge(left_half, right_half)
+def merge(left_half, right_half):
+   i = j = 0
+   merged_list = []
+   while i < len(left_half) and j < len(right_half):
+       if left_half[i] < right_half[j]:
+           merged_list.append(left_half[i])
+           i += 1
+       else:
+           merged_list.append(right_half[j])
+           j += 1
+   merged_list += left_half[i:]
+   merged_list += right_half[j:]
+   return merged_list
+def main():
+   with open('output.txt', 'r') as f:
+       nums = [int(line.strip()) for line in f]
+   sorted_nums = merge_sort(nums)
+   with open('output_sorted.txt', 'w') as f:
+       for num in sorted_nums:
+           f.write(str(num) + '\n')
+
+   print('Done! Output written to output_sorted.txt')
+
+if __name__ == '__main__':
+   start_time = time.time()
+   main()
+   end_time = time.time()
+   print('--- %s seconds ---' % (end_time - start_time))
+
+Quick: 
+import time
+
+def quick_sort(nums):
+   if len(nums) <= 1:
+       return nums
+   pivot = nums[len(nums) // 2]
+   left_nums = [n for n in nums if n < pivot]
+   middle_nums = [n for n in nums if n == pivot]
+   right_nums = [n for n in nums if n > pivot]
+   return quick_sort(left_nums) + middle_nums + quick_sort(right_nums)
+
+def main():
+   with open('output.txt', 'r') as f:
+       nums = [int(line.strip()) for line in f]
+   sorted_nums = quick_sort(nums)
+   with open('output_sorted.txt', 'w') as f:
+       for num in sorted_nums:
+           f.write(str(num) + '\n')
+   print('Done! Output written to output_sorted.txt')
+
+if __name__ == '__main__':
+   start_time = time.time()
+   main()
+   end_time = time.time()
+   print('--- %s seconds ---' % (end_time - start_time))
+Selection Sort: 
+import time
+
+
+def selection_sort(nums):
+   for i in range(len(nums)):
+       min_idx = i
+       for j in range(i+1, len(nums)):
+           if nums[min_idx] > nums[j]:
+               min_idx = j
+       nums[i], nums[min_idx] = nums[min_idx], nums[i]
+   return nums
+
+
+def main():
+   with open('output.txt', 'r') as f:
+       nums = [int(line.strip()) for line in f]
+   sorted_nums = selection_sort(nums)
+   with open('output_sorted.txt', 'w') as f:
+       for num in sorted_nums:
+           f.write(str(num) + '\n')
+   print('Done! Output written to output_sorted.txt')
+
+
+if __name__ == '__main__':
+   start_time = time.time()
+   main()
+   end_time = time.time()
+   print('--- %s seconds ---' % (end_time - start_time))
+
+Insertion: 
+import time
+
+def insertion_sort(nums):
+    for i in range(1, len(nums)):
+        key = nums[i]
+        j = i - 1
+        while j >= 0 and key < nums[j]:
+            nums[j + 1] = nums[j]
+            j -= 1
+        nums[j + 1] = key
+    return nums
+
+def main():
+    with open('output.txt', 'r') as f:
+        nums = [int(line.strip()) for line in f]
+    sorted_nums = insertion_sort(nums)
+    with open('output_sorted.txt', 'w') as f:
+        for num in sorted_nums:
+            f.write(str(num) + '\n')
+
+    print('Done! Output written to output_sorted.txt')
+
+if __name__ == '__main__':
+    start_time = time.time()
+    main()
+    end_time = time.time()
+    print('--- %s seconds ---' % (end_time - start_time))
